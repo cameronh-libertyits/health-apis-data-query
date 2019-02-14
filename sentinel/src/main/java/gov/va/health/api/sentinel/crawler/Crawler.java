@@ -37,6 +37,7 @@ public class Crawler {
   private final RequestQueue requestQueue;
   private final ResultCollector results;
   private final Supplier<String> authenticationToken;
+  private final String authenticationScheme;
   private final ExecutorService executor;
   private final boolean forceJargonaut;
 
@@ -130,7 +131,7 @@ public class Crawler {
     log.info("Requesting {} as {}", url, type.getName());
     Response response =
         RestAssured.given()
-            .header("Authorization", "Bearer " + authenticationToken.get())
+            .header("Authorization", authenticationScheme + " " + authenticationToken.get())
             .contentType("application/fhir+json")
             .header("jargonaut", forceJargonaut)
             .relaxedHTTPSValidation()

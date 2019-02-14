@@ -30,6 +30,11 @@ public class CdwCrawlerTest {
     log.info("Using patient {} (Override with -Dpatient-id=<id>)", patient);
     Swiggity.swooty(patient);
 
+    String authenticationScheme = System.getProperty("authentication-scheme", "Bearer");
+    log.info(
+        "Using the {} authentication scheme  (Override with -Dauthentication-scheme=Basic|Bearer)",
+        authenticationScheme);
+
     Supplier<String> accessTokenValue = () -> env.argonaut().accessToken().get().get();
     assertThat(accessTokenValue).isNotNull();
     log.info("Access token is specified");
@@ -47,6 +52,7 @@ public class CdwCrawlerTest {
             .executor(Executors.newFixedThreadPool(threadCount()))
             .requestQueue(q)
             .results(results)
+            .authenticationScheme(authenticationScheme)
             .authenticationToken(accessTokenValue)
             .forceJargonaut(true)
             .build();
