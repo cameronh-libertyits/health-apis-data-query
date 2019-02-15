@@ -56,6 +56,7 @@ public class StagingCrawlerTest {
             .executor(Executors.newFixedThreadPool(4))
             .requestQueue(rq)
             .results(results)
+            .authenticationScheme("Bearer")
             .authenticationToken(accessTokenValue)
             .forceJargonaut(true)
             .build();

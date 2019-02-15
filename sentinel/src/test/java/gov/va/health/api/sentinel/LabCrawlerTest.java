@@ -48,6 +48,7 @@ public class LabCrawlerTest {
             .executor(Executors.newFixedThreadPool(10))
             .requestQueue(q)
             .results(results)
+            .authenticationScheme("Bearer")
             .authenticationToken(() -> robot.token().accessToken())
             .forceJargonaut(true)
             .build();
