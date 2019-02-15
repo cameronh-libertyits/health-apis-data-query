@@ -22,8 +22,13 @@ import org.junit.experimental.categories.Category;
 @Slf4j
 public class LabCargoCrawlerTest {
 
-  private final String clinicianUser = System.getProperty("clinician-user","someuser");
-  private final String clinicianPassword = System.getProperty("clinician-password","somepassword");
+  private final String clinicianUser = System.getProperty("clinician-user", "someuser");
+
+  private final String clinicianPassword = System.getProperty("clinician-password", "somepassword");
+
+  private String basicToken() {
+    return Base64.getEncoder().encodeToString((clinicianUser + ":" + clinicianPassword).getBytes());
+  }
 
   private int crawl(String patient) {
     SystemDefinition env = Sentinel.get().system();
@@ -49,10 +54,7 @@ public class LabCargoCrawlerTest {
             .forceJargonaut(true)
             .build();
     crawler.crawl();
-    log.info(
-        "Results for {} \n{}",
-        patient,
-        results.message());
+    log.info("Results for {} \n{}", patient, results.message());
     return results.failures();
   }
 
@@ -85,9 +87,5 @@ public class LabCargoCrawlerTest {
         .withUrl(env.argonaut().url())
         .requestQueue(new ConcurrentRequestQueue())
         .build();
-  }
-
-  private String basicToken(){
-    return Base64.getEncoder().encodeToString((clinicianUser+":"+clinicianPassword).getBytes());
   }
 }
