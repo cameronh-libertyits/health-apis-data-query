@@ -22,7 +22,7 @@ import org.apache.commons.lang3.BooleanUtils;
 @Slf4j
 public class LabRobots {
 
-  private final Config labConfig;
+  @Getter private final Config labConfig;
 
   @Getter(lazy = true)
   private final IdMeOauthRobot user1 = makeRobot1();
@@ -142,7 +142,7 @@ public class LabRobots {
         .build();
   }
 
-  private static class Config {
+  static class Config {
     private Properties properties;
 
     @SneakyThrows
